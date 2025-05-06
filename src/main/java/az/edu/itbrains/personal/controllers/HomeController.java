@@ -1,10 +1,10 @@
 package az.edu.itbrains.personal.controllers;
 
 
-import az.edu.itbrains.personal.models.Banner;
-import az.edu.itbrains.personal.models.Experience;
-import az.edu.itbrains.personal.repositories.BannerRepository;
-import az.edu.itbrains.personal.repositories.ExperienceRepository;
+import az.edu.itbrains.personal.dtos.banner.BannerHomeDto;
+import az.edu.itbrains.personal.dtos.experience.ExperienceDto;
+import az.edu.itbrains.personal.services.BannerService;
+import az.edu.itbrains.personal.services.ExperienceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,28 +15,29 @@ import java.util.List;
 public class HomeController {
 
 
-    private final BannerRepository bannerRepository;
-    private final ExperienceRepository experienceRepository;
+    private final BannerService bannerService;
+    private final ExperienceService experienceService;
 
-    public HomeController(BannerRepository bannerRepository, ExperienceRepository experienceRepository) {
-        this.bannerRepository = bannerRepository;
-        this.experienceRepository = experienceRepository;
+    public HomeController(BannerService bannerService, ExperienceService experienceService) {
+        this.bannerService = bannerService;
+        this.experienceService = experienceService;
     }
 
 
     @GetMapping("/")
     public String index(Model model){
-        Banner findBanner = bannerRepository.findById(1L).orElseThrow();
-        model.addAttribute("banner",findBanner);
+        BannerHomeDto bannerHomeDto = bannerService.getHomeBanner();
+        model.addAttribute("banner", bannerHomeDto);
         return "index.html";
     }
 
     @GetMapping("/resume")
     public String resume(Model model){
-        List<Experience> findExperiences = experienceRepository.findAll();
 
+        List<ExperienceDto> experiences = experienceService.getAllExperiences();
 
-        model.addAttribute("experiences", findExperiences);
+        model.addAttribute("experiences",experiences);
+
         return "resume.html";
     }
 
