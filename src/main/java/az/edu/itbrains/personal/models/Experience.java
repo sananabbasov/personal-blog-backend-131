@@ -6,22 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "banners")
-public class Banner {
+@Table(name = "experiences")
+public class Experience {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String subTitle;
-    private String photoUrl;
 
-
-
+    private Date startDate;
+    private Date endDate;
+    private String position;
+    private String city;
+    private String company;
+    private String description;
 
 }
