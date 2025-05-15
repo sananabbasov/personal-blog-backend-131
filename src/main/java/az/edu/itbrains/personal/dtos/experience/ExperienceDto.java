@@ -23,11 +23,14 @@ public class ExperienceDto {
 
 
     public String getYear() {
-        LocalDateTime myDateObj = LocalDateTime.now();
-        String date = String.valueOf(myDateObj);
-
+        String date = String.valueOf(startDate).substring(0,10);
         LocalDate currentDate = LocalDate.parse(date);
-        return currentDate.getYear() +" - present";
+        if (endDate == null){
+            return currentDate.getYear() +  " - present";
+        }
+        String dateEnd = String.valueOf(endDate).substring(0,10);
+        LocalDate currentDateEnd = LocalDate.parse(dateEnd);
+        return currentDate.getYear() + " - " + currentDateEnd.getYear() ;
     }
 
 
